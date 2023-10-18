@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TaskController!{% endblock %}
+
+{%block stylsheets %}
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+{%endblock%}
+
+{% block body %}
+    <table class="table-auto" id="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nom</th>
+                <th>Date Prévue</th>
+                <th>Catégorie</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+
+            {% for task in tasks %}
+                <tr>
+                        <td>{{ task.id }}</td>
+                        <td>{{ task.title }}</td>
+                        <td>{{ task.description }}</td>
+                        <td>{{ task.done }}</td>
+                        <td>{{ task.duration }}</td>
+
+                        <td>{{ task.dueAt | date('d/m/Y') }}</td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    </table>
+{% endblock %}
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.js"></script>
+    <script>
+        let table = new DataTable('#table')
+    </script>
+{%endblock%}
