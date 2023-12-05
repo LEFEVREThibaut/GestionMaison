@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Log in!{% endblock %}
+
+{% block body %}
+<form method="post" style="display: flex; flex-direction: column; align-items: center;">
+    {% if error %}
+        <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            Vous êtes connecté en tant que {{ app.user.userIdentifier }}, <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        </div>
+    {% endif %}
+
+    <h1 class="h3 mb-3 font-weight-normal" style="text-align:center; margin-top: 5rem; margin-bottom : 10rem" >Se connecter</h1>
+    <div style="margin: 0 auto; display:flex; flex-direction: column; width:15vw;">
+    <label for="inputUsername" style="text-align:center; margin-bottom: 1rem; font-size:1.5rem;">Nom d'utilisateur</label>
+    <input type="text" value="{{ last_username }}" name="username" id="inputUsername" class="form-control" autocomplete="username" required autofocus>
+    <label for="inputPassword" style="text-align:center; margin-bottom: 1rem; margin-top: 1rem; font-size:1.5rem;">Mot de passe</label>
+    <input type="password" name="password" id="inputPassword" class="form-control" autocomplete="current-password" required>
+    <input type="hidden" name="_csrf_token"
+           value="{{ csrf_token('authenticate') }}"
+    >
+    </div>
+
+    <button class="btn btn-lg btn-primary" style="background-color: blue; color: white; padding: 1rem 2rem; border:none; border-radius: 2rem; max-width:10vw; margin-top: 4rem;" type="submit">
+        Se connecter
+    </button>
+</form>
+
+{% endblock %}

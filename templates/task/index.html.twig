@@ -3,34 +3,87 @@
 {% block title %}Hello TaskController!{% endblock %}
 
 {%block stylsheets %}
+
 <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.css" />
+
 {%endblock%}
 
 {% block body %}
-    <table class="table-auto" id="table">
+    <table class="table">
         <thead>
             <tr>
-                <th>ID</th>
                 <th>Nom</th>
-                <th>Date Prévue</th>
-                <th>Catégorie</th>
+                <th>Description</th>
+                <th>État</th>
+                <th>Durée</th>
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-200">
 
-            {% for task in tasks %}
+            {% for id, task in tasks %}
                 <tr>
-                        <td>{{ task.id }}</td>
                         <td>{{ task.title }}</td>
                         <td>{{ task.description }}</td>
-                        <td>{{ task.done }}</td>
-                        <td>{{ task.duration }}</td>
+                        {% if task.done != "" and task.done != 0 %}
+                            <td>Finie</td>
+                        {% else %}
+                            <td>À faire</td>
+                        {% endif %}
 
-                        <td>{{ task.dueAt | date('d/m/Y') }}</td>
+                        <td>{{ task.duration }} heure</td>
+                        {% if session is defined and done is not defined or role != null%}
+                            {% if task.done == "" or task.done == 0 %}
+                                <td>
+                                    <a href="task/done/{{id+1}}">
+                                        <input type='checkbox'>
+                                    </a>
+                                </td>
+                            {% else %}
+                                <td>
+                                        <input type='checkbox' checked disabled>
+                                </td>
+                            {% endif %}
+                        {% endif %}
                 </tr>
             {%endfor%}
         </tbody>
     </table>
+    {% if role != null %}
+        <a href="task/create" style="background-color: blue; padding: 1rem; border-radius: 1rem; margin: 5rem; margin-left: 39rem; text-decoration:none; color: white;">Ajouter une tâche</a>
+
+    {% else %}
+        {% if session is defined and done is not defined %}
+            <a href="session/{{session.id}}/set-done" style="text-decoration: none; background-color: blue; color: white; padding: 1rem; border-radius: 1rem; margin-left: 15rem">Arrêter session</a>
+        {% else %}
+            <a href="session" style="text-decoration: none; background-color: blue; color: white; padding: 1rem; border-radius: 1rem; margin-left: 15rem">Lancer session</a>
+        {% endif %}
+    {% endif %}
+
+    <h2 style="margin-top: 5rem; margin-left: 10rem">Historique des sessions</h2>
+
+    <table class="table-auto table">
+        <thead>
+            <tr>
+                <th>Session finie</th>
+                <th>Durée total</th>
+            </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200">
+
+            {% for id, session in sessions %}
+                <tr>
+                    {% if session.done == 1 %}
+                        <td>Oui</td>
+                    {% else %}
+                        <td>Non</td>
+                    {% endif %}
+                    <td>{{ session.Finalduration }}</td>
+                </tr>
+            {%endfor%}
+        </tbody>
+    
+    
+
 {% endblock %}
 {% block javascripts %}
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>

@@ -17,7 +17,6 @@ class TaskType extends AbstractType
             ->add('description')
             ->add('duration')
             ->add('createdAt')
-            ->add('done')
             ->add('save', SubmitType::class, [
                 'label' => 'Enregistrer',
                 'attr' => [

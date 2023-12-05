@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello SessionController!{% endblock %}
+
+{% block body %}
+    <h1>SessionController</h1>
+
+
+    {% if 'role' == true %}
+        <p>admin</p>
+
+    {% else %}
+        <p>user</p>
+    {% endif %}
+{% endblock %}

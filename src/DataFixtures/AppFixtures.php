@@ -18,23 +18,14 @@ class AppFixtures extends Fixture
     {
         
 
-        // Récupération des catégories créées
-        $allTags = $manager->getRepository(Tag::class)->findAll();
+        
+        // faire en sorte que l'utilisateur avec l'id 1 ai le rôle admin
+        $user = $manager->getRepository(User::class)->find(1);
+        var_dump($user);
+        $user->setRoles(['ROLE_ADMIN']);
+        $manager->persist($user);
 
-        // Création entre 15 et 30 tâches aléatoirement
-        for ($t = 0; $t < mt_rand(15, 30); $t++) {
-            // création nouvel objet Task
-            $task = new Taches;
-            // on le nourrit
-            $task->setTitle()
-                ->setDescription()
-                ->setCreatedAt(new \DateTime)
-                ->setDone(); // attention les dates sont créées en fonction du réglage serveur
-
-            $manager->persist($task);
-        }
 
         $manager->flush();
     }
 }
-

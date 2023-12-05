@@ -29,6 +29,9 @@ class Taches
     #[ORM\Column]
     private ?bool $done = null;
 
+    #[ORM\ManyToOne(inversedBy: 'TaskDone')]
+    private ?Session $session = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -90,6 +93,18 @@ class Taches
     public function setDone(bool $done): static
     {
         $this->done = $done;
+
+        return $this;
+    }
+
+    public function getSession(): ?Session
+    {
+        return $this->session;
+    }
+
+    public function setSession(?Session $session): static
+    {
+        $this->session = $session;
 
         return $this;
     }

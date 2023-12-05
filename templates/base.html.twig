@@ -1,16 +1,106 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <meta charset="UTF-8">
+            <title>{% block title %}Welcome!{% endblock %}</title>
+            <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
+            {% block stylesheets %}
+            <style>
 
-        {% block javascripts %}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
-</html>
+                * {
+                    margin : 0;
+                    padding : 0;
+                    font-family : Arial, Helvetica, sans-serif;
+                }
+                #name {
+                    margin-left : 100px;
+                    margin-top : 50px;
+                }
+
+                .table {
+                    margin-left : 250px;
+                    margin-top : 50px;
+                    margin-bottom : 50px;
+                    border : 1px solid black;
+                }
+
+                .table td {
+                    padding: 10px;
+                }
+
+                form[name="task"] {
+                    margin: 0 auto;
+                    width: fit-content;
+                }
+
+                form[name="task"] input {
+                    margin: 10px;
+                }
+
+                form[name="task"] #task{
+                    display: flex;
+                    text-align:center;
+                    flex-direction: column;
+                }
+
+                form[name="task"] #task div{
+                    display: flex;
+                    flex-direction: column;
+                    margin: 5px;
+                }
+
+                form[name="registration_form"] {
+                    margin: 0 auto;
+                    width: fit-content;
+                }
+
+                form[name="registration_form"] div{
+                    display: flex;
+                    flex-direction: column;
+                    margin: 5px;
+                }
+
+                #registration_form_save {
+                    margin: 2rem auto; 
+                    display: flex; 
+                    background-color: blue; 
+                    color: white; 
+                    padding: 1rem 2rem; 
+                    border-radius: 2rem; 
+                    border:none;
+                }
+
+                #registration_form_save:hover {
+                    cursor: pointer;
+                    background-color: darkblue;
+                }
+
+
+                #task_save {
+                    margin: 2rem auto; 
+                    display: flex; 
+                    background-color: blue; 
+                    color: white; 
+                    padding: 1rem 2rem; 
+                    border-radius: 2rem; 
+                    border:none;
+                }
+
+                #task_save:hover {
+                    cursor: pointer;
+                    background-color: darkblue;
+                }
+            </style>
+            {% endblock %}
+
+            {% block javascripts %}
+            {% endblock %}
+        </head>
+        <body>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <p><a href="{{ path('app_logout') }}" style="background-color: red; color: white; padding: 1rem 2rem; border-radius: 1rem; position: fixed; right: 5rem; text-decoration: none">Déconnexion</a></p>
+                <h1 id="name">Bonjour {{ app.user.username }} !</h1>
+            {% endif %}
+            {% block body %}{% endblock %}
+                </body>
+    </html>
